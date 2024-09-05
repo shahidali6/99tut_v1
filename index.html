@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Public IP and Location</title>
+</head>
+<body>
+    <h1>Public IP and Location</h1>
+    <p id="ip"></p>
+    <p id="location"></p>
+
+    <script>
+        async function getPublicIPAndLocation() {
+            try {
+                // Fetch the public IP address
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                const ip = ipData.ip;
+                document.getElementById('ip').innerText = `IP Address: ${ip}`;
+
+                // Fetch the location information based on the IP address
+                const locationResponse = await fetch(`http://ip-api.com/json/${ip}`);
+                const locationData = await locationResponse.json();
+                const city = locationData.city;
+                document.getElementById('location').innerText = `City: ${city}`;
+            } catch (error) {
+                console.error('Error fetching IP or location:', error);
+            }
+        }
+
+        // Call the function to get the IP and location
+        getPublicIPAndLocation();
+    </script>
+</body>
+</html>
